@@ -10,7 +10,7 @@ namespace YooKassa4WinForms
 {
     public static class JsonConverter
     {
-        private static JsonSerializer JsonSerializer = new JsonSerializer();
+        private static readonly JsonSerializer JsonSerializer = new JsonSerializer();
 
         public static void SerializeJson(this Stream stream, object content)
         {
@@ -24,6 +24,15 @@ namespace YooKassa4WinForms
         public static T DeserializeJson<T>(this Stream stream) where T : class
         {
             using (var streamReader = new StreamReader(stream))
+            {
+                JsonTextReader jtr = new JsonTextReader(streamReader);
+                return JsonSerializer.Deserialize<T>(jtr);
+            }
+        }
+
+        public static T DeserializeJson<T>(string path) where T : class
+        {
+            using (var streamReader = new StreamReader(path))
             {
                 JsonTextReader jtr = new JsonTextReader(streamReader);
                 return JsonSerializer.Deserialize<T>(jtr);

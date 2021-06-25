@@ -40,6 +40,10 @@ namespace YooKassa4WinForms
             TestJsonObject jsonObject = YooKassa.GetPaymentObject<TestJsonObject>(jsonPlaceholder);
             OpenLinkInBrowser(jsonPlaceholder);
             MessageBox.Show($"id: {jsonObject.Id}\nuserid: {jsonObject.UserId}\ntitle: {jsonObject.Title}\ncompleted: {jsonObject.Completed}");
+
+            /// тестовый json
+            var keys = JsonConverter.DeserializeJson<Dictionary<string, string>>("keys.json");
+            StatusLabel.Text = keys["store_id"] + '\n' + keys["secret_key"];
         }
 
         private void button1_Click(object sender, EventArgs e)

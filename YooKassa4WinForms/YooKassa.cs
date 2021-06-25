@@ -9,8 +9,19 @@ using System.Threading.Tasks;
 
 namespace YooKassa4WinForms
 {
-    public class YooKassa
+    public static class YooKassa
     {
+        static YooKassa()
+        {
+            Credentials = JsonConverter.DeserializeJson<Dictionary<string, string>>("keys.json");
+            Id = Credentials["store_id"];
+            Key = Credentials["secret_key"];
+        }
+
+        private static readonly Dictionary<string, string> Credentials;
+        private static readonly string Id;
+        private static readonly string Key;
+
         /// <summary>
         /// Запрос позволяет передать информацию дял создания объекта платежа
         /// </summary>
@@ -21,7 +32,8 @@ namespace YooKassa4WinForms
             string requestUri = $"https://api.yookassa.ru/v3/payments";
             HttpWebRequest request = WebRequest.Create(requestUri) as HttpWebRequest;
             request.Method = "POST";
-            request.Headers.Add(HttpRequestHeader.Authorization, "Basic " + Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes($"{ourId}:{secretKey}")));
+            request.Headers.Add(HttpRequestHeader.Authorization,
+                "Basic " + Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes($"{Id}:{Key}")));
             request.ContentType = "application/json";
             request.Headers.Add("Idempotence-Key", "1234567890");
             string content = "{\"amount\": {\"value\": \"100.00\", \"currency\": \"RUB\"}," +
@@ -34,9 +46,6 @@ namespace YooKassa4WinForms
             }
             return request.GetResponse().GetResponseStream().DeserializeJson<T>();
         }
-
-        private const string ourId = "";
-        private const string secretKey = "";
 
         //https://yookassa.ru/developers/api?lang=bash#get_payment
         /// <summary>
@@ -53,7 +62,8 @@ namespace YooKassa4WinForms
             else
                 requestUri = $"https://api.yookassa.ru/v3/payments/{paymentId}";
             WebRequest request = WebRequest.Create(requestUri);
-            request.Headers.Add(HttpRequestHeader.Authorization, "Basic " + Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes($"{ourId}:{secretKey}")));
+            request.Headers.Add(HttpRequestHeader.Authorization,
+                "Basic " + Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes($"{Id}:{Key}")));
             request.ContentType = "application/json";
             return request.GetResponse().GetResponseStream().DeserializeJson<T>();
         }
