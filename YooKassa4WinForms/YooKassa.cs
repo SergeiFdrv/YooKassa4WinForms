@@ -18,6 +18,19 @@ namespace YooKassa4WinForms
             Key = Credentials["secret_key"];
         }
 
+        /// <summary>
+        /// Данные магазина, необходимые для доступа к API. Предлагается добавлять в выходную папку файл keys.json вида:<br/>
+        /// <code>{ "store_id": "идентификатор", "secret_key": "ключ" }</code>
+        /// </summary>
+        /// <remarks>
+        /// Для разработчиков:
+        /// cоздайте в корне проекта такой файл keys.json со свойствами:
+        /// <list type="bullet">
+        /// <item>Действия при сборке - Внедренный ресурс</item>
+        /// <item>Копировать в выходной каталог - Всегда копировать</item>
+        /// </list>
+        /// Путь к файлу "/YooKassa4WinForms/keys.json" добавлен в .gitignore
+        /// </remarks>
         private static readonly Dictionary<string, string> Credentials;
         private static readonly string Id;
         private static readonly string Key;
