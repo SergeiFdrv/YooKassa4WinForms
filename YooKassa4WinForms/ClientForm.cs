@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 
-namespace WindowsFormsApp1
+namespace YooKassa4WinForms
 {
-    public partial class Form1 : Form
+    public partial class ClientForm : Form
     {
-        public Form1()
+        public ClientForm()
         {
             InitializeComponent();
         }

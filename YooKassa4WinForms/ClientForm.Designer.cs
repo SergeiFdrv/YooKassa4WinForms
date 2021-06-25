@@ -1,7 +1,7 @@
 ﻿
-namespace WindowsFormsApp1
+namespace YooKassa4WinForms
 {
-    partial class Form1
+    partial class ClientForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.

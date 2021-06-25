@@ -7,10 +7,15 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsFormsApp1
+namespace YooKassa4WinForms
 {
     public class YooKassa
     {
+        /// <summary>
+        /// Запрос позволяет передать информацию дял создания объекта платежа
+        /// </summary>
+        /// <typeparam name="T">В качестве типа получаемого объекта рекомендуется выбрать Payment или Dictionary&lt;string, object&gt;</typeparam>
+        /// <returns>Объект платежа в актуальном статусе.</returns>
         public static T CreatePaymentObject<T>() where T : class
         {
             string requestUri = $"https://api.yookassa.ru/v3/payments";
@@ -34,6 +39,12 @@ namespace WindowsFormsApp1
         private const string secretKey = "";
 
         //https://yookassa.ru/developers/api?lang=bash#get_payment
+        /// <summary>
+        /// Запрос позволяет получить информацию о текущем состоянии платежа по его уникальному идентификатору.
+        /// </summary>
+        /// <typeparam name="T">В качестве типа получаемого объекта рекомендуется выбрать Payment или Dictionary&lt;string, object&gt;</typeparam>
+        /// <param name="paymentId"></param>
+        /// <returns>Объект платежа в актуальном статусе.</returns>
         public static T GetPaymentObject<T>(string paymentId) where T : class
         {
             string requestUri;

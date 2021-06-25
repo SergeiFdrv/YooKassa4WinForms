@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 
-namespace WindowsFormsApp1.Properties
+namespace YooKassa4WinForms.Properties
 {
     /// <summary>
     ///   Класс ресурсов со строгим типом для поиска локализованных строк и пр.
