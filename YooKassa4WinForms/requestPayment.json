@@ -1,0 +1,31 @@
+{
+  "amount": {
+    "value": "100.00",
+    "currency": "RUB"
+  },
+  "capture": true,
+  "payment_method_data": {
+    "type": "bank_card"
+  },
+  "confirmation": {
+    "type": "redirect",
+    "return_url": "https://www.google.com/"
+  },
+  "description": "Заказ №1",
+  "receipt": {
+    "customer": {
+      "email": "genericaddress@gmail.ru"
+    },
+    "items": [
+      {
+        "description": "tovar",
+        "quantity": "1",
+        "amount": {
+          "value": "100.00",
+          "currency": "RUB"
+        },
+        "vat_code": 4
+      }
+    ]
+  }
+}
