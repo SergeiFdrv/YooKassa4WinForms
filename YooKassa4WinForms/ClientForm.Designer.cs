@@ -52,15 +52,16 @@ namespace YooKassa4WinForms
             this.StatusLabel.TabIndex = 1;
             this.StatusLabel.Text = "Действуй";
             // 
-            // Form1
+            // ClientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.StatusLabel);
             this.Controls.Add(this.PayButton);
-            this.Name = "Form1";
+            this.Name = "ClientForm";
             this.Text = "Form1";
+            this.Activated += new System.EventHandler(this.ClientForm_Activated);
             this.ResumeLayout(false);
             this.PerformLayout();
 

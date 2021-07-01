@@ -56,6 +56,9 @@ namespace YooKassa4WinForms
         public bool Refundable { get; set; }
 
         public bool Test { get; set; }
+
+        [JsonIgnore]
+        public bool IsOver { get; set; } = false;
     }
 
     [JsonObject]

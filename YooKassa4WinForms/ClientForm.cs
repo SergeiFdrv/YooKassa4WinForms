@@ -23,7 +23,7 @@ namespace YooKassa4WinForms
 
         private void OpenLinkInBrowser(string url) => System.Diagnostics.Process.Start(url);
 
-        private void TestWithJsonPlaceholder()
+        private void Test()
         {
             string jsonPlaceholder = "https://jsonplaceholder.typicode.com/todos/1";
 
@@ -44,29 +44,42 @@ namespace YooKassa4WinForms
             /// тестовый json
             var keys = JsonConverter.DeserializeJson<Dictionary<string, string>>("keys.json");
             StatusLabel.Text = keys["store_id"] + '\n' + keys["secret_key"];
+
+            /// десериализация в строку (TODO: не работает, починить)
+            StatusLabel.Text = JsonConverter.DeserializeJson<string>("keys.json");
         }
+
+        private Payment Payment;
 
         private void button1_Click(object sender, EventArgs e)
         {
-#if DEBUG
-            TestWithJsonPlaceholder();
-#else
-            Payment payment = YooKassa.CreatePaymentObject<Payment>();
-            OpenLinkInBrowser(payment.Confirmation.ConfirmationUrl);
-            StatusLabel.Text = "Ожидание оплаты...";
-            do
+            bool _test = false;
+            if (_test)
             {
-                Thread.Sleep(10000);
-                payment = YooKassa.GetPaymentObject<Payment>(payment.PaymentId);
-            } while (payment.Status == "pending");
-            switch (payment.Status)
-            {
-                case "canceled":
-                    StatusLabel.Text = "Платеж отменен"; break;
-                default:
-                    StatusLabel.Text = "Платеж завершен. Спасибо"; break;
+                Test();
+                return;
             }
-#endif
+            Payment = YooKassa.CreatePaymentObject<Payment>();
+            OpenLinkInBrowser(Payment.Confirmation.ConfirmationUrl);
+            StatusLabel.Text = "Ожидание оплаты...";
+        }
+
+        private void ClientForm_Activated(object sender, EventArgs e)
+        {
+            if (!(Payment == null && Payment.IsOver))
+            {
+                Payment = YooKassa.GetPaymentObject<Payment>(Payment.PaymentId);
+                switch (Payment.Status)
+                {
+                    case "canceled":
+                        StatusLabel.Text = "Платеж отменен"; break;
+                    case "succeeded":
+                        StatusLabel.Text = "Платеж завершен. Спасибо"; break;
+                    default:
+                        StatusLabel.Text = "Платеж не был завершен"; return;
+                }
+                Payment.IsOver = true;
+            }
         }
     }
 }
