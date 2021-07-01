@@ -15,6 +15,10 @@ namespace YooKassa4WinForms
     {
         static YooKassa()
         {
+            if (!File.Exists("keys.json"))
+            {
+                throw new Exception("Добавьте keys.json в выходной каталог программы");
+            }
             Credentials = JsonConverter.DeserializeJson<Dictionary<string, string>>("keys.json");
             Id = Credentials["store_id"];
             Key = Credentials["secret_key"];

@@ -66,7 +66,7 @@ namespace YooKassa4WinForms
 
         private void ClientForm_Activated(object sender, EventArgs e)
         {
-            if (!(Payment == null && Payment.IsOver))
+            if (!(Payment == null || Payment.IsOver))
             {
                 Payment = YooKassa.GetPaymentObject<Payment>(Payment.PaymentId);
                 switch (Payment.Status)
